@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in! <br>
+                    Nama: {{auth()->user()->name}} <br>
+                    Username: {{auth()->user()->username}} <br>
+                    Email: {{auth()->user()->email}} <br>
+
                 </div>
             </div>
         </div>

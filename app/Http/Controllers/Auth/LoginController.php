@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +37,28 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    public function login(Request $request){
+        $this->validate($request, [
+            'username'=>'required|string',//validasi form username, datap berisi username atau email
+            'password'=>'required|string|min:6'
+        ]);
+
+        //lakukan pengecekan username atau email
+        $loginType = filter_var($request->username, FILTER_VALIDATE_EMAIL)?'email':'username';
+        
+        //tampung informasi login 
+        $login=[
+            $loginType=>$request->username,
+            'password'=>$request->password
+        ];
+
+        //proses login
+        if(auth()->attempt($login)){
+            //jika berhasil redirek ke halaman home
+            return redirect()->route('home');
+        }
+        //jika salah maka kemabli ke halaman login dan tampilakn error
+        return redirect()->route('login')->with(['error'=>'Email/Password Salah!']);
     }
 }
