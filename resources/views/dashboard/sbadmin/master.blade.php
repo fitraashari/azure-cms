@@ -17,7 +17,16 @@
 
   <!-- Custom styles for this template-->
   <link href="{{asset('sbadmin2/css/sb-admin-2.min.css')}}" rel="stylesheet">
+  
+  <!-- Custom styles for this page -->
+  <link href="{{asset('sbadmin2/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  <style>
+    #wrapper #content-wrapper {
+    background-color: #ffffff;
+}
 
+  </style>
+@stack('script-head')
 </head>
 
 <body id="page-top">
@@ -78,7 +87,18 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+                      
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+           
+        
         </div>
       </div>
     </div>
@@ -93,6 +113,15 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('sbadmin2/js/sb-admin-2.min.js')}}"></script>
+  
+  <!-- Page level plugins -->
+  <script src="{{asset('sbadmin2/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="{{asset('sbadmin2/js/datatables.js')}}"></script>
+  @stack('script-body')
+  @include('sweetalert::alert')
 
 </body>
 

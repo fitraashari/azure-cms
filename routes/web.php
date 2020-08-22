@@ -11,13 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('index');
+// });
+Route::get('/','IndexController@index');
+Route::get('/read/{year}/{month}/{slug}','IndexController@show');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('home');
+Route::resource('dashboard/posts', 'PostController');
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+Route::get('dashboard/media', function () {
+    return view('dashboard.media');
+});
 // Route::get('/home', function(){
 //     return view('dashboard.home');
 // });
