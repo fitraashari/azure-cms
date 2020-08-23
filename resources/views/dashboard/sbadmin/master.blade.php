@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Azure CMS</title>
+<title>Azure CMS - {{Str::title(Str::before(Route::currentRouteName(),'.'))}}</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{asset('sbadmin2/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -120,6 +120,7 @@
 
   <!-- Page level custom scripts -->
   <script src="{{asset('sbadmin2/js/datatables.js')}}"></script>
+
   @stack('script-body')
   @include('sweetalert::alert')
 

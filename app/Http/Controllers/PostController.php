@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Post;
 use App\Tag;
+use Illuminate\Support\Facades\URL;
 class PostController extends Controller
 {
     /**
@@ -87,7 +88,8 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         //dd($post->content);
-        return view('dashboard.post.show', compact('post'));
+        $url = URL::to('/').'/read'.'/'.\Carbon\Carbon::parse($post->created_at)->format('Y/m').'/'.$post->slug;
+        return view('dashboard.post.show', compact('post','url'));
     }
 
     /**

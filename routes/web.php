@@ -15,6 +15,8 @@
 //     return view('index');
 // });
 Route::get('/','IndexController@index');
+Route::post('/search','IndexController@search');
+Route::get('/read','IndexController@index');
 Route::get('/read/{year}/{month}/{slug}','IndexController@show');
 Auth::routes();
 
@@ -25,7 +27,10 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 Route::get('dashboard/media', function () {
     return view('dashboard.media');
-});
+})->name('media');
+Route::get('dashboard/livechat', function () {
+    return view('dashboard.chat');
+})->name('chat');
 // Route::get('/home', function(){
 //     return view('dashboard.home');
 // });

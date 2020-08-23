@@ -10,7 +10,7 @@
       <div style="float:right">
       <i class="fas fa-calendar-alt "></i> {{\Carbon\Carbon::parse($post->created_at)->format('d/m/Y')}}
     </div>
-  <br><small>url: {{URL::to('/').'/'.\Carbon\Carbon::parse($post->created_at)->format('Y/m').'/'.$post->slug}}</small>
+  <br><small>url: <a href="{{$url}}">{{$url}}</a></small>
     </div>
     <div class="card-body">
         {!!$post->content!!}

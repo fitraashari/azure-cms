@@ -5,10 +5,10 @@
     <div class="row">
       <div class="col-lg-8">
     <div class="card mb-4">
-        <div class="card-header py-3" >
-          <h6 class="m-0 font-weight-bold text-primary" style="display: inline">Post Entry</h6>
+        <div class="card-header py-3 bg-primary " >
+          <h6 class="m-0 font-weight-bold text-light" style="display: inline">Post Entry</h6>
           <div style="float:right">
-          <a href="/dashboard/posts/create" class="btn btn-sm btn-primary"><i class="fas fa-plus-square "></i> New Post</a>
+          <a href="/dashboard/posts/create" class="btn btn-sm btn-light"><i class="fas fa-plus-square "></i> New Post</a>
         </div>
         </div>
         <div class="card-body">

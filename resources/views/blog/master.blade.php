@@ -22,6 +22,11 @@
   <link href="{{asset('blog/css/clean-blog.min.css')}}" rel="stylesheet">
 {{-- share button --}}
 <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5f40cd130c92c50012fc237c&product=inline-share-buttons" async="async"></script>
+<style>
+  .bg-gradient-purple{background: rgb(226,0,255);
+background: linear-gradient(274deg, rgba(226,0,255,0.7595413165266106) 32%, rgba(0,123,255,0.6502976190476191) 100%);
+  }
+</style>
 </head>
 
 <body>
@@ -48,7 +53,30 @@
 
   <!-- Custom scripts for this template -->
   <script src="{{asset('blog/js/clean-blog.min.js')}}"></script>
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/5f40f4dacc6a6a5947ade0c6/default';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
+    {{-- particle --}}
+<script src="{{asset('vendor/particles/particles.js')}}"></script>
+<script>
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+particlesJS.load('particles-js', 'assets/particles.json', function() {
+  console.log('callback - particles.js config loaded');
+});
+
+</script>
   @stack('script-body')
+  @include('sweetalert::alert')
 </body>
 
 </html>
