@@ -12,7 +12,7 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item {{ Request::routeIs('home') ? 'active' : '' }}">
         <a class="nav-link" href="/dashboard">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
@@ -25,32 +25,44 @@
       <div class="sidebar-heading">
         Interface
       </div>
-      <li class="nav-item">
+      <li class="nav-item {{ Request::routeIs('media') ? 'active' : '' }}">
         <a class="nav-link" href="/dashboard/media">
           <i class="fas fa-fw fa-camera"></i>
           <span>Media</span></a>
       </li>
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item {{ (request()->is('dashboard/posts*')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" 
-        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"
+        data-toggle="collapse" data-target="#post" aria-expanded="true" aria-controls="post"
         >
           <i class="fas fa-fw fa-clipboard"></i>
           <span>Post</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="post" class="collapse {{ (request()->is('dashboard/posts*')) ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Post Content:</h6>
-            <a class="collapse-item" href="/dashboard/posts/create">Add New</a>
-            <a class="collapse-item" href="/dashboard/posts">List Post</a>
+            <h6 class="collapse-header">Posts Content:</h6>
+            <a class="collapse-item {{ Request::routeIs('posts.create') ? 'active' : '' }}" href="{{route('posts.create')}}">Add New</a>
+          <a class="collapse-item {{ Request::routeIs('posts.index') ? 'active' : '' }}" href="{{route('posts.index')}}">List Posts</a>
           </div>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/dashboard/pages">
-          <i class="fas fa-fw fa-file"></i>
-          <span>Pages</span></a>
+
+      <li class="nav-item {{ (request()->is('dashboard/pages*')) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" 
+        data-toggle="collapse" data-target="#pages" aria-expanded="true" aria-controls="pages"
+        >
+          <i class="fas fa-fw fa-list"></i>
+          <span>Pages</span>
+        </a>
+        <div id="pages" class="collapse {{ (request()->is('dashboard/pages*')) ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Pages Content:</h6>
+            <a class="collapse-item {{ Request::routeIs('pages.create') ? 'active' : '' }}" href="{{route('pages.create')}}">Add New</a>
+          <a class="collapse-item {{ Request::routeIs('pages.index') ? 'active' : '' }}" href="{{route('pages.index')}}">List Pages</a>
+          </div>
+        </div>
       </li>
+      
       <li class="nav-item">
         <a class="nav-link" href="/dashboard/livechat">
           <i class="fas fa-fw fa-comments"></i>

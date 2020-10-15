@@ -1,14 +1,14 @@
 @extends('dashboard.sbadmin.master')
 @section('content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Posts</h1>
+    <h1 class="h3 mb-4 text-gray-800">Pages</h1>
     <div class="row">
       <div class="col-lg-8">
     <div class="card mb-4">
         <div class="card-header py-3 bg-primary " >
-          <h6 class="m-0 font-weight-bold text-light" style="display: inline">Posts Entry</h6>
+          <h6 class="m-0 font-weight-bold text-light" style="display: inline">Pages Entry</h6>
           <div style="float:right">
-          <a href="{{route('posts.create')}}" class="btn btn-sm btn-light"><i class="fas fa-plus-square "></i> New Posts</a>
+          <a href="{{route('pages.create')}}" class="btn btn-sm btn-light"><i class="fas fa-plus-square "></i> New Pages</a>
         </div>
         </div>
         <div class="card-body">
@@ -45,9 +45,9 @@
                     <td>{{$post->status}}</td>
                     <td>{{$post->created_at->diffforHumans()}}</td>
                     <td>
-                    <a href="{{route('posts.show',['post'=>$post->id])}}" class="btn btn-sm btn-dark"><i class="fas fa-eye"></i></a>
-                    <a href="{{route('posts.edit',['post'=>$post->id])}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
-                    <form class="d-inline-block" action="{{route('posts.destroy',['post'=>$post->id])}}" method="POST">
+                    <a href="/dashboard/posts/{{$post->id}}" class="btn btn-sm btn-dark"><i class="fas fa-eye"></i></a>
+                    <a href="/dashboard/posts/{{$post->id}}/edit" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+                    <form class="d-inline-block" action="/dashboard/posts/{{$post->id}}" method="POST">
                       @csrf
                       @method('DELETE')
   

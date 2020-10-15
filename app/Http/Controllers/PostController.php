@@ -46,35 +46,22 @@ class PostController extends Controller
         //
         $slug = Str::slug($request->title, '-');
         $title = Str::title($request->title);
-        
-        $validate = Validator::make($request->all(),[
-            'title' => 'required|unique:posts|max:255',
-            'content' => 'required',
-            'status' => 'required',
-            'featured' => 'required',
-            'tags' => 'required',
-        ]);
+        $validate = Validator::make($request->all(),$this->validatePost());
         if ($validate->fails()) {
             return back()->with('toast_error', "Input Error, Please Try Again")->withErrors($validate)->withInput();
         }
-        
-        $save = Post::create([
+        $post = Post::create([
         'title'=>$title,
         'content'=>$request['content'],
-        'slug'=>$slug,
+        'slug'=>$slug.'-'.Str::random(9),
         'featured'=>$request['featured'],
         'user_id'=>auth()->user()->id,
         'status'=>$request['status']
         ]);
-        $tags = Tag::make($request->tags);
-        
-        
-        foreach ($tags as $tag) {
-            $tag_save = Tag::firstOrCreate($tag);
-            $save->tag()->attach($tag_save->id);
-        }
 
-        return redirect('/dashboard/posts')->with('success', 'Success Post New Entry!');
+        $tag_create = $this->createTag($request->tags,$post);
+        
+        return redirect()->route('posts.index')->with('success', 'Success Post New Entry!');
     }
 
     /**
@@ -88,7 +75,7 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         //dd($post->content);
-        $url = URL::to('/').'/read'.'/'.\Carbon\Carbon::parse($post->created_at)->format('Y/m').'/'.$post->slug;
+        $url = URL::to('/').'/'.$post->slug;
         return view('dashboard.post.show', compact('post','url'));
     }
 
@@ -125,13 +112,7 @@ class PostController extends Controller
         $slug = Str::slug($request->title, '-');
         $title = Str::title($request->title);
         
-        $validate = Validator::make($request->all(),[
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'status' => 'required',
-            'featured' => 'required',
-            'tags' => 'required',
-        ]);
+        $validate = Validator::make($request->all(),$this->validatePost());
         if ($validate->fails()) {
             return back()->with('toast_error', "Input Error, Please Try Again")->withErrors($validate)->withInput();
         }
@@ -139,21 +120,15 @@ class PostController extends Controller
         $update = Post::where('id','=',$id)->update([
         'title'=>$title,
         'content'=>$request['content'],
-        'slug'=>$slug,
         'featured'=>$request['featured'],
-        'user_id'=>auth()->user()->id,
         'status'=>$request['status']
         ]);
-
-        $tags = Tag::make($request->tags);
         $post=Post::find($id);
         $post->tag()->detach();
-        foreach ($tags as $tag) {
-            $tag_save = Tag::firstOrCreate($tag);
-            $post->tag()->attach($tag_save->id);
-        }
         
-        return redirect('/dashboard/posts')->with('success', 'Success Update Post!');
+        $tag_create = $this->createTag($request->tags,$post);
+        
+        return redirect()->route('posts.index')->with('success', 'Success Update Post!');
     }
 
     /**
@@ -166,6 +141,24 @@ class PostController extends Controller
     {
         //
         Post::destroy($id);
-        return redirect('/dashboard/posts')->with('success', 'Success Delete Post!');
+        return redirect()->route('posts.index')->with('success', 'Success Delete Post!');
+    }
+
+    public function validatePost(){
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'status' => 'required',
+            'featured' => 'required',
+            'tags' => 'required',
+        ];
+    }
+    
+    public function createTag($tags,$post){
+        $tags = Tag::make($tags);
+        foreach ($tags as $tag) {
+            $tag_save = Tag::firstOrCreate($tag);
+            $post->tag()->attach($tag_save->id);
+        }
     }
 }

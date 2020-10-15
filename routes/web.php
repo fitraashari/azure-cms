@@ -16,12 +16,14 @@
 // });
 Route::get('/','IndexController@index');
 Route::post('/search','IndexController@search');
-Route::get('/read','IndexController@index');
-Route::get('/read/{year}/{month}/{slug}','IndexController@show');
+// Route::get('/read','IndexController@index');
+Route::get('/post/{slug}/','IndexController@show');
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::resource('dashboard/posts', 'PostController');
+Route::resource('dashboard/pages', 'PageController');
+
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
@@ -31,6 +33,7 @@ Route::get('dashboard/media', function () {
 Route::get('dashboard/livechat', function () {
     return view('dashboard.chat');
 })->name('chat');
+
 // Route::get('/home', function(){
 //     return view('dashboard.home');
 // });

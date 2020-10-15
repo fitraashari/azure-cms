@@ -12,7 +12,7 @@ class Tag extends Model
         $tags = explode(',', strtolower($arr));
         $tag_multi = [];
         foreach ($tags as $tag) {
-            $tagAss['name'] = $tag;
+            $tagAss['name'] = trim($tag);
             $tag_multi[] = $tagAss;
         }
         return $tag_multi;

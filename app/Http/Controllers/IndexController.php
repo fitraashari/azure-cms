@@ -24,7 +24,7 @@ class IndexController extends Controller
         //dd($url);
         return view('index', compact('posts','content','url'));
     }
-    public function show($year,$month,$slug){
+    public function show($slug){
         $post = Post::where('slug','=',$slug)->first();
         return view('show',compact('post'));
         //dd($post->content);
